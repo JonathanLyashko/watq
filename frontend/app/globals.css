@@ -1,26 +1,474 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-background: #f5f7fb;
+  --color-foreground: #111827;
+  --color-panel: rgba(255, 255, 255, 0.86);
+  --color-panel-strong: #ffffff;
+  --color-line: rgba(85, 96, 132, 0.14);
+  --color-muted: #5b6478;
+  --color-accent: #6d28d9;
+  --color-accent-strong: #b91c7b;
+  --color-ink-soft: #eef2ff;
+  --font-sans: "Hanken Grotesk", "Aptos", "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", "Cascadia Mono", "Consolas", monospace;
+  --font-display: "Space Grotesk", "Bahnschrift", "Trebuchet MS", sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+:root {
+  --background: #f5f7fb;
+  --foreground: #111827;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
+  margin: 0;
+  overflow-x: clip;
+  background:
+    radial-gradient(circle at top left, rgba(185, 28, 123, 0.12), transparent 28%),
+    radial-gradient(circle at top right, rgba(109, 40, 217, 0.14), transparent 24%),
+    var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.site-surface-grid {
+  background-image:
+    linear-gradient(to right, rgba(109, 40, 217, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(109, 40, 217, 0.08) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.site-surface-mesh {
+  background-image:
+    linear-gradient(to right, rgba(30, 64, 175, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(185, 28, 123, 0.07) 1px, transparent 1px);
+  background-size: 36px 36px;
+}
+
+.panel {
+  border: 1px solid var(--color-line);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(248, 250, 252, 0.88));
+  box-shadow: 0 24px 60px rgba(27, 35, 58, 0.08);
+  backdrop-filter: blur(14px);
+  border-radius: 1.5rem;
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, var(--color-accent-strong), var(--color-accent));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.icon-chip {
+  display: inline-flex;
+  height: 3.25rem;
+  width: 3.25rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 1rem;
+  border: 1px solid rgba(109, 40, 217, 0.14);
+  background: rgba(109, 40, 217, 0.08);
+  color: var(--color-accent);
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  border: 1px solid rgba(91, 100, 120, 0.16);
+  background: rgba(255, 255, 255, 0.72);
+  padding: 0.45rem 0.8rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.button-primary,
+.button-secondary,
+.button-light,
+.button-ghost-light {
+  display: inline-flex;
+  min-height: 3rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  padding: 0.8rem 1.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition:
+    transform 160ms ease,
+    background-color 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.button-primary,
+.button-secondary {
+  width: 100%;
+}
+
+.button-primary:hover,
+.button-secondary:hover,
+.button-light:hover,
+.button-ghost-light:hover {
+  transform: translateY(-1px);
+}
+
+.button-primary {
+  color: white;
+  background: linear-gradient(135deg, var(--color-accent-strong), var(--color-accent));
+  box-shadow: 0 14px 32px rgba(109, 40, 217, 0.24);
+}
+
+.button-secondary {
+  border: 1px solid rgba(91, 100, 120, 0.16);
+  background: rgba(255, 255, 255, 0.8);
+  color: #111827;
+}
+
+.button-light {
+  background: white;
+  color: #111827;
+}
+
+.button-ghost-light {
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  color: white;
+  background: transparent;
+}
+
+.hero-visual {
+  position: relative;
+  isolation: isolate;
+  aspect-ratio: 1;
+  width: min(100%, 32rem);
+  margin-inline: auto;
+  border-radius: 2rem;
+  border: 1px solid rgba(109, 40, 217, 0.16);
+  background:
+    radial-gradient(circle at center, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.4)),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.65), rgba(240, 244, 255, 0.7));
+  box-shadow: 0 30px 80px rgba(33, 41, 72, 0.12);
+  overflow: hidden;
+}
+
+.hero-visual__image {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+  padding: 2.5rem;
+  filter: drop-shadow(0 24px 40px rgba(185, 28, 123, 0.16));
+}
+
+.hero-visual__core,
+.hero-visual__ring,
+.hero-visual__node {
+  position: absolute;
+  z-index: 0;
+}
+
+.hero-visual__core {
+  inset: 24%;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(185, 28, 123, 0.16), rgba(109, 40, 217, 0.08));
+  filter: blur(32px);
+}
+
+.hero-visual__ring {
+  inset: 14%;
+  border-radius: 999px;
+  border: 1px solid rgba(109, 40, 217, 0.16);
+  opacity: 0.6;
+}
+
+.hero-visual__ring--two {
+  inset: 6%;
+  border-style: dashed;
+  opacity: 0.4;
+}
+
+.hero-visual__node {
+  height: 0.9rem;
+  width: 0.9rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 0 0 8px rgba(109, 40, 217, 0.08);
+  opacity: 0.8;
+}
+
+.hero-visual__node--one {
+  top: 22%;
+  left: 72%;
+}
+
+.hero-visual__node--two {
+  top: 62%;
+  left: 20%;
+}
+
+.hero-visual__node--three {
+  top: 76%;
+  left: 70%;
+}
+
+.cta-panel {
+  display: grid;
+  gap: 1.5rem;
+  border-radius: 2rem;
+  padding: 2rem;
+  background:
+    radial-gradient(circle at top left, rgba(255, 255, 255, 0.14), transparent 30%),
+    linear-gradient(135deg, #0f172a, #312e81);
+  box-shadow: 0 28px 70px rgba(15, 23, 42, 0.22);
+}
+
+.recruitment-visual {
+  position: relative;
+  display: grid;
+  gap: 2rem;
+  align-items: start;
+  border-radius: 2rem;
+  padding: 2rem;
+  background:
+    radial-gradient(circle at top right, rgba(180, 91, 211, 0.22), transparent 42%),
+    radial-gradient(circle at bottom left, rgba(30, 64, 175, 0.18), transparent 38%);
+  overflow: clip;
+}
+
+.recruitment-visual__copy {
+  position: relative;
+  z-index: 2;
+  max-width: 36rem;
+  display: grid;
+  gap: 1.25rem;
+}
+
+.recruitment-visual__stage {
+  position: relative;
+  min-height: 22rem;
+  padding: 1.5rem 0 0.5rem;
+}
+
+.recruitment-visual__photo-wrap {
+  position: relative;
+  z-index: 2;
+  width: min(100%, 39rem);
+  margin: 0 auto;
+  transform: rotate(-2.5deg);
+  filter: drop-shadow(0 30px 50px rgba(45, 48, 71, 0.18));
+}
+
+.recruitment-visual__photo-wrap::before,
+.recruitment-visual__photo-wrap::after {
+  content: "";
+  position: absolute;
+  inset: auto;
+  z-index: -1;
+  border-radius: 1.75rem;
+}
+
+.recruitment-visual__photo-wrap::before {
+  inset: -1rem 1.5rem 1rem -1.5rem;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(236, 242, 255, 0.9));
+  transform: rotate(5deg);
+}
+
+.recruitment-visual__photo-wrap::after {
+  inset: 1rem -1.25rem -1rem 1.25rem;
+  background: linear-gradient(135deg, rgba(244, 232, 255, 0.8), rgba(255, 255, 255, 0.72));
+  border: 1px solid rgba(109, 40, 217, 0.08);
+  transform: rotate(-4deg);
+}
+
+.recruitment-visual__photo {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 1.5rem;
+  object-fit: cover;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+}
+
+.recruitment-visual__halo {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(26px);
+  opacity: 0.75;
+}
+
+.recruitment-visual__halo--one {
+  top: 3rem;
+  right: 2rem;
+  width: 12rem;
+  height: 12rem;
+  background: rgba(185, 28, 123, 0.16);
+}
+
+.recruitment-visual__halo--two {
+  bottom: 1rem;
+  left: 2rem;
+  width: 14rem;
+  height: 14rem;
+  background: rgba(99, 102, 241, 0.14);
+}
+
+.recruitment-visual__bubble {
+  position: absolute;
+  z-index: 3;
+  display: grid;
+  gap: 0.35rem;
+  max-width: 14rem;
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 1.25rem;
+  padding: 0.85rem 1rem;
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow: 0 18px 38px rgba(45, 48, 71, 0.12);
+  backdrop-filter: blur(12px);
+}
+
+.recruitment-visual__bubble--top {
+  top: 0;
+  right: 0;
+  transform: rotate(3deg);
+}
+
+.recruitment-visual__bubble--bottom {
+  bottom: 0.25rem;
+  left: 0;
+  transform: rotate(-4deg);
+}
+
+.recruitment-visual__bubble-label {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.recruitment-visual__bubble-text {
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: #42506a;
+}
+
+@media (min-width: 768px) {
+  .button-primary,
+  .button-secondary {
+    width: auto;
+  }
+
+  .cta-panel {
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    padding: 2.5rem;
+  }
+
+  .recruitment-visual {
+    padding: 2.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .recruitment-visual {
+    grid-template-rows: auto 1fr;
+    min-height: 42rem;
+  }
+
+  .recruitment-visual__stage {
+    min-height: 28rem;
+    margin-top: -1rem;
+  }
+
+  .recruitment-visual__photo-wrap {
+    margin-left: 2rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .hero-visual {
+    width: min(100%, 26rem);
+  }
+
+  .hero-visual__image {
+    padding: 1.5rem;
+  }
+
+  .hero-visual__core {
+    inset: 28%;
+  }
+
+  .hero-visual__ring {
+    inset: 16%;
+  }
+
+  .hero-visual__ring--two {
+    inset: 8%;
+  }
+
+  .recruitment-visual__bubble {
+    position: relative;
+    top: auto;
+    right: auto;
+    bottom: auto;
+    left: auto;
+    max-width: none;
+    margin-bottom: 1rem;
+    transform: none;
+  }
+
+  .recruitment-visual__stage {
+    display: grid;
+    gap: 1rem;
+    min-height: auto;
+    padding-top: 0;
+  }
+
+  .recruitment-visual__photo-wrap {
+    width: 100%;
+    transform: none;
+  }
+
+  .recruitment-visual__photo-wrap::before {
+    inset: -0.5rem 0.75rem 0.5rem -0.75rem;
+  }
+
+  .recruitment-visual__photo-wrap::after {
+    inset: 0.5rem -0.75rem -0.5rem 0.75rem;
+  }
 }
