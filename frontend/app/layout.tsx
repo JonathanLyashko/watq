@@ -3,7 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "WatQ",
-  description: "Quantum design team site for the University of Waterloo.",
+  description: "Quantum design team based in Waterloo",
 };
 
 export default function RootLayout({
